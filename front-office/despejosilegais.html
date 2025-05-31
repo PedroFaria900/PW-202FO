@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lixo</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #4c9a2a;
+      height: 100%;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #dff0d8;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 100px;
+      width: auto;
+      margin-right: 10px;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+    }
+
+    header span {
+      font-weight: bold;
+      color: #4caf50;
+    }
+
+    h1, h2 {
+      font-size: 42px;
+      font-weight: 700;
+      color: #4c9a2a;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 28px;
+      font-weight: 300;
+      color: #4c9a2a;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #mapa {
+      height: 300px;
+      width: 90%;
+      max-width: 800px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .conteudo-popup {
+      background-color: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .conteudo-popup h2 {
+      margin: 0 0 10px;
+    color: #4caf50;
+    font-size: 18px;  
+  }
+
+    .conteudo-popup p {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+
+    .conteudo-popup button {
+      margin-top: 10px;
+      background-color: #8bc34a;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .rodape {
+      background-color: #dff0d8;
+      padding: 20px 0;
+      width: 100%;
+      border-top: 1px solid #dff0d8;
+      text-align: center;
+    }
+
+    
+    .links-rodape {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 14px;
+    }
+
+    .links-rodape a {
+      text-decoration: none;
+      color: #3d7020;
+      transition: color 0.3s;
+    }
+
+    .links-rodape a:hover {
+      text-decoration: underline;
+      color: #3d7020;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"> 
+      <img src="logo.png" alt="EyesEverywhere" />
+      <h1>EyesEverywhere</h1>
+    </div>
+  </header>
+<main>
+  <h1>Despejos Ilegais</h1>
+  <div id="mapa"></div>
+</main>
+  <footer class="rodape">
+    <ul class="links-rodape">
+      <li><a href="paginainicial.html">Página Inicial</a></li>
+      <li><a href="sobrenos.html">Sobre nós</a></li>
+      <li><a href="#">Contacto</a></li>
+      <li><a href="#">Política de privacidade e Segurança</a></li>
+    </ul>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  const mapa = L.map('mapa').setView([41.4428, -8.2906], 14);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(mapa);
+
+  function carregarOcorrenciasEAuditorias() {
+    const ocorrencias = JSON.parse(localStorage.getItem('ocorrencias')) || [];
+
+    ocorrencias
+      .filter(o => o.tipo === 'Despejos Ilegais')  
+      .forEach(o => {
+        const conteudoPopup = `
+          <div class="conteudo-popup">
+            <h2>Despejo Ilegal</h2>
+            <p><strong>Data:</strong> ${o.data}</p>
+            <p><strong>Hora:</strong> ${o.hora}</p>
+            <p><strong>Tipo:</strong> ${o.tipo}</p>
+            <p><strong>Localização:</strong> ${o.localizacao}</p>
+            <button onclick="mapa.closePopup()">Fechar</button>
+          </div>
+        `;
+
+        const lat = parseFloat(o.latitude);
+        const lng = parseFloat(o.longitude);
+
+        if (!isNaN(lat) && !isNaN(lng)) {
+          L.marker([lat, lng]).addTo(mapa).bindPopup(conteudoPopup);
+        }
+      });
+  }
+
+  carregarOcorrenciasEAuditorias();
+</script>
+</body>
+</html>

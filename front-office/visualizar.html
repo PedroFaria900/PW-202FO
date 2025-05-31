@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Visualizar Auditorias e Ocorrências - EyesEverywhere</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #dff0d8;
+    }
+
+    .logotipo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logotipo img {
+      height: 100px;
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .logotipo h1 {
+      font-size: 32px;
+      color: #4c9a2a;
+      margin: 0;
+    }
+
+    .container-visualizar {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px #6ca92b;
+    }
+
+    .container-visualizar h2 {
+      color: #4c9a2a;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #AACF45;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      color: #3b8224;
+      font-weight: 600;
+    }
+
+    td {
+      color: #21560F;
+    }
+
+    .status {
+      font-weight: bold;
+      padding: 5px 10px;
+      border: 2px solid #21560F;
+      border-radius: 15px;
+      display: inline-block;
+      font-size: 14px;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+    }
+
+    .pagination button {
+      background-color: #6ca92b;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .pagination button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-content h2 {
+      color: #3b8224;
+      margin-top: 0;
+    }
+
+    .modal-content p {
+      font-size: 14px;
+      color: #21560F;
+      margin: 8px 0;
+    }
+
+    .close-modal-btn {
+      display: block;
+      margin: 20px auto 0;
+      background-color: #6ca92b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .rodape {
+      background-color: #dff0d8;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .conteudo-rodape {
+      padding-top: 10px;
+    }
+
+    .ligações-rodape {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 14px;
+    }
+
+    .ligações-rodape a {
+      text-decoration: none;
+      color: #3d7020;
+      transition: color 0.3s;
+    }
+
+    .ligações-rodape a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logotipo">
+    <a href="paginainicial.html">
+      <img src="logo.png" alt="EyesEverywhere" />
+    </a>
+    <h1>EyesEverywhere</h1>
+  </div>
+</header>
+
+<div class="container-visualizar">
+  <h2>Auditorias e Ocorrências</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Data</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th>Detalhes</th>
+      </tr>
+    </thead>
+    <tbody id="ocorrencias-tabela"></tbody>
+  </table>
+  <div class="pagination"></div>
+</div>
+
+<div class="modal" id="info-modal">
+  <div class="modal-content">
+    <h2>Detalhes da Ocorrência</h2>
+    <p><strong>Data:</strong> <span id="modal-data"></span></p>
+    <p><strong>Hora:</strong> <span id="modal-hora"></span></p>
+    <p><strong>Tipo:</strong> <span id="modal-tipo"></span></p>
+    <p><strong>Localização:</strong> <span id="modal-localizacao"></span></p>
+    <p><strong>Anexos:</strong> <span id="modal-anexos"></span></p>
+    <p><strong>Anônimo:</strong> <span id="modal-anonimo"></span></p>
+    <button class="close-modal-btn" onclick="fecharModal()">Fechar</button>
+  </div>
+</div>
+
+<footer class="rodape">
+  <div class="conteudo-rodape">
+    <ul class="ligações-rodape">
+      <li><a href="paginainicial.html">Página Inicial</a></li>
+      <li><a href="sobrenos.html">Sobre nós</a></li>
+      <li><a href="#">Contacto</a></li>
+      <li><a href="#">Política de privacidade e Segurança</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const ocorrencias = JSON.parse(localStorage.getItem('ocorrencias')) || [];
+    const tabela = document.getElementById('ocorrencias-tabela');
+    const itemsPerPage = 8;
+    let currentPage = 1;
+
+    function renderTable(page) {
+      tabela.innerHTML = '';
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const pageItems = ocorrencias.slice(start, end);
+
+      pageItems.forEach((ocorrencia, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>#${12548796 + start + index}</td>
+          <td>${ocorrencia.data}</td>
+          <td>${ocorrencia.tipo}</td>
+          <td><span class="status">${ocorrencia.estado || 'Em aberto'}</span></td>
+          <td>
+            <span class="material-symbols-outlined" style="cursor: pointer; color: #21560F; font-size: 20px;" onclick="mostrarDetalhes(${start + index})">
+              more_vert
+            </span>
+          </td>
+        `;
+        tabela.appendChild(row);
+      });
+
+      atualizarPaginacao();
+    }
+
+    function atualizarPaginacao() {
+      const totalPages = Math.ceil(ocorrencias.length / itemsPerPage);
+      const paginacao = document.querySelector('.pagination');
+      paginacao.innerHTML = '';
+
+      const anterior = document.createElement('button');
+      anterior.textContent = 'Anterior';
+      anterior.disabled = currentPage === 1;
+      anterior.onclick = () => {
+        currentPage--;
+        renderTable(currentPage);
+      };
+      paginacao.appendChild(anterior);
+
+      const proximo = document.createElement('button');
+      proximo.textContent = 'Próximo';
+      proximo.disabled = currentPage === totalPages;
+      proximo.onclick = () => {
+        currentPage++;
+        renderTable(currentPage);
+      };
+      paginacao.appendChild(proximo);
+    }
+
+    renderTable(currentPage);
+  });
+
+  function mostrarDetalhes(index) {
+    const ocorrencias = JSON.parse(localStorage.getItem('ocorrencias')) || [];
+    const ocorrencia = ocorrencias[index];
+
+    document.getElementById('modal-data').textContent = ocorrencia.data || 'N/A';
+    document.getElementById('modal-hora').textContent = ocorrencia.hora || 'N/A';
+    document.getElementById('modal-tipo').textContent = ocorrencia.tipo || 'N/A';
+    document.getElementById('modal-localizacao').textContent = ocorrencia.localizacao || 'N/A';
+    document.getElementById('modal-anexos').textContent = ocorrencia.anexos || 'Nenhum';
+    document.getElementById('modal-anonimo').textContent = ocorrencia.anonimo === 'sim' ? 'Sim' : 'Não';
+
+    document.getElementById('info-modal').style.display = 'flex';
+  }
+
+  function fecharModal() {
+    document.getElementById('info-modal').style.display = 'none';
+  }
+</script>
+</body>
+</html>

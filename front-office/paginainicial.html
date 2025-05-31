@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EyesEverywhere</title>
+
+  <!-- Google Fonts - Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #4c9a2a;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #dff0d8;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 100px;
+      width: auto;
+      margin-right: 10px;
+    }
+
+   main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+    }
+
+    .botao-registar {
+      background-color: #6ca92b;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: normal;
+      transition: background-color 0.3s;
+      display: inline-block;
+      border: none;
+    }
+
+    .botao-registar:hover {
+      background-color: #163f12;
+    }
+
+    .botao-info {
+      background-color: #dff0d8;
+      color: #4c9a2a;
+    }
+
+    a.botao-info {
+      display: inline-block;
+      background-color: #dff0d8;
+      color: #4c9a2a;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: normal;
+      transition: background-color 0.3s;
+    }
+
+    a.botao-info:hover {
+      background-color: #cfe8c8;
+    }
+
+    .comunidade {
+  padding: 60px 20px;
+  background-color: #f4f4f4;
+}
+
+.bloco-comunidade {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.texto-comunidade {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.texto-comunidade h2 {
+  color: #84c13b;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.texto-comunidade p {
+  color: #21560f;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.imagem-comunidade {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.imagem-comunidade img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+    .como-funciona {
+      background-color: #f4f4f4;
+      padding: 60px 20px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .como-funciona h2 {
+      color: #4c9a2a;
+      font-size: 2.2em;
+      margin-bottom: 40px;
+      font-weight: bold;
+    }
+
+    .passos {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .passo {
+      border-radius: 20px;
+      padding: 25px;
+      height: 280px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      color: #2e6b1f;
+      font-size: 0.95em;
+    }
+
+    .passo1 { background-color: #eaf5df; }
+    .passo2 { background-color: #dff4cd; }
+    .passo3 { background-color: #d8f2be; }
+    .passo4 { background-color: #c8ec9b; }
+
+    .material-symbols-outlined.icone {
+      font-size: 36px;
+      margin-bottom: 15px;
+      color: #4c9a2a;
+    }
+
+    @media (max-width: 1000px) {
+      .passos {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .passos {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .estatisticas {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 60px;
+      background-color: #f4f4f4;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .estatistica {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #9ED605;
+      justify-content: space-between;
+      gap: 10px;
+      min-width: 200px;
+
+    }
+
+    .estatistica h3,
+    .estatistica p {
+      color: #84c13b;
+      font-size: 40px;
+      font-weight: medium;
+    }
+
+    .estrelas .material-symbols-outlined {
+      font-size: 32px;
+      color: #84c13b;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .estrelas .material-symbols-outlined:hover {
+      transform: scale(1.2);
+    }
+
+    .navegacao-links {
+  background-color: #f4f4f4;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.bloco-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.visualizacao-consulta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #dff0d8;
+  color: #21560f;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 12px ;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.visualizacao-consulta:hover {
+  background-color: #cce4bd;
+  transform: scale(1.03);
+}
+
+.material-symbols-outlined {
+  font-size: 24px;
+  color: #4c9a2a;
+}
+
+    .juntar {
+      width: 100%;
+      background-color: #dff0d8;
+      padding: 60px 20px 0;
+      text-align: center;
+    }
+
+    .cta {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .rodape {
+      background-color: #dff0d8;
+      padding: 20px 0;
+      width: 100%;
+      margin-top: 60px;
+      border-top: 1px solid #dff0d8;
+      text-align: center;
+    }
+
+    .links-rodape {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 14px;
+    }
+
+    .links-rodape a {
+      text-decoration: none;
+      color: #3d7020;
+      transition: color 0.3s;
+    }
+
+    .links-rodape a:hover {
+      text-decoration: underline;
+      color: #3d7020;
+    }
+
+    .destaque {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .texto-destaque {
+      flex: 1;
+      max-width: 50%;
+    }
+
+    .mapa-destaque {
+      flex: 1;
+      max-width: 50%;
+      text-align: center;
+    }
+
+    .mapa-destaque img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1, h2 {
+      font-size: 42px;
+      font-weight: 700;
+      color: #4c9a2a;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #4c9a2a;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .bloco-tipologias {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.botao-tipologia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  line-height: 1.4;
+
+  background-color: #dff0d8;
+  color: #21560f;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+.botao-tipologia:hover {
+  background-color: #cce4bd;
+  transform: scale(1.05);
+}
+
+.tipologia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contador {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 5px;
+  color: #2e6b1f;
+}
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"> 
+      <img src="logo.png" alt="EyesEverywhere" />
+      <h1>EyesEverywhere</h1>
+    </div>
+  </header>
+
+  <main>
+    <section class="destaque">
+      <div class="texto-destaque">
+        <h2>EyesEverywhere</h2>
+        <p>
+          Denuncie ocorrências como lixo, vandalismo ou despejos ilegais de forma simples e rápida.
+          Acompanhe o progresso das denúncias em tempo real, visualize-as num mapa interativo e
+          receba recompensas pelas suas contribuições. Cada ação conta para melhorar a comunidade.
+        </p>
+        <div>
+          <a href="registoocorrencias.html" class="botao-registar">Registar Ocorrência</a>
+          <a href="sobrenos.html" class="botao-info">Mais Informações</a>
+        </div>
+      </div>
+      <div class="mapa-destaque">
+        <img src="mapa.png" alt="Mapa interativo" />
+      </div>
+    </section>
+
+    <section class="comunidade">
+      <div class="bloco-comunidade">
+        <div class="texto-comunidade">
+          <h2>Limpe a sua comunidade</h2>
+          <p>
+            Identifique e reporte pontos críticos, como lixo acumulado,
+            vandalismo e despejos ilegais, diretamente na plataforma. 
+            As autoridades serão notificadas e você pode acompanhar 
+            o progresso. Ajude ainda mais participando em eventos de 
+            limpeza ou organizando ações na sua área. Juntos, 
+            podemos tornar a cidade mais limpa e segura.
+          </p>
+        </div>
+        <div class="imagem-comunidade">
+          <img src="image.png" alt="Comunidade suja" />
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="como-funciona">
+      <h2>Como funciona?</h2>
+      <div class="passos">
+        <div class="passo passo1">
+          <span class="material-symbols-outlined icone">photo_camera</span>
+          <h3>1. Registe a<br>Ocorrência</h3>
+          <p>Capture uma foto, informe a localização e descreva o problema.</p>
+        </div>
+        <div class="passo passo2">
+          <span class="material-symbols-outlined icone">check_circle</span>
+          <h3>2. Envio e<br>avaliação</h3>
+          <p>A denúncia é enviada às autoridades, que validam e encaminham a solução.</p>
+        </div>
+        <div class="passo passo3">
+          <span class="material-symbols-outlined icone">schedule</span>
+          <h3>3. Acompanhe<br>o progresso</h3>
+          <p>Acompanhe os status da ocorrência em tempo real.</p>
+        </div>
+        <div class="passo passo4">
+          <span class="material-symbols-outlined icone">loyalty</span>
+          <h3>4. Participe e<br>ganhe</h3>
+          <p>Contribua ativamente e acumule pontos que podem ser trocados por benefícios.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="estatisticas">
+      <div class="estatistica">
+        <span class="material-symbols-outlined icone">task_alt</span>
+        <h3>Ocorrências resolvidas</h3>
+        <p id="cont-resolvidas">0</p>
+      </div>
+
+      <div class="estatistica">
+        <span class="material-symbols-outlined icone">schedule</span>
+        <h3>Tempo médio de resposta</h3>
+        <p id="tempo-medio-auditorias">0h</p>
+      </div>
+
+      <div class="estatistica" id="avaliacao-estatistica">
+        <span class="material-symbols-outlined icone">sentiment_satisfied</span>
+        <h3>Nível de satisfação</h3>
+        <div class="estrelas" id="estrelas"></div>
+        <p id="media-satisfacao">0.0/5</p>
+      </div>
+    </section>
+
+
+    <section class="navegacao-links">
+      <div class="bloco-links">
+        <a href="visualizar.html" class="visualizacao-consulta">
+          <span class="material-symbols-outlined">visibility</span>
+          Visualização de auditorias e ocorrências
+        </a>
+      </div>
+    
+      <div class="bloco-tipologias">
+        <div class="tipologia">
+          <a href="lixo.html" class="botao-tipologia">Lixo
+          <span class="contador" id="cont-lixo">0</span></a>
+        </div>
+        <div class="tipologia">
+          <a href="vandalismo.html" class="botao-tipologia">Vandalismo
+          <span class="contador" id="cont-vandalismo">0 </span></a>
+        </div>
+        <div class="tipologia">
+          <a href="grafites.html" class="botao-tipologia">Grafites
+          <span class="contador" id="cont-grafites">0</span></a>
+        </div>
+        <div class="tipologia">
+          <a href="despejosilegais.html" class="botao-tipologia">Despejos Ilegais
+          <span class="contador" id="cont-despejos">0</span></a>
+        </div>
+        <div class="tipologia">
+          <a href="outros.html" class="botao-tipologia">Outros
+          <span class="contador" id="cont-outros">0</span></a>
+        </div>
+      </div>
+    </section>
+    
+    
+     
+    <section class="juntar">
+      <div class="cta">
+        <h2>Junte-se a nós</h2>
+        <p>Faça parte desta mudança e ajude a tornar a sua cidade mais limpa e segura!</p> 
+      </div>
+        <footer class="rodape">
+        <ul class="links-rodape">
+          <li><a href="paginainicial.html">Página Inicial</a></li>
+          <li><a href="sobrenos.html">Sobre nós</a></li>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="#">Política de privacidade e Segurança</a></li>
+        </ul>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    const estrelasContainer = document.getElementById("estrelas");
+    const mediaSatisfacao = document.getElementById("media-satisfacao");
+  
+    // Array inicial de avaliações
+    let avaliacoes = []; // Começa vazio
+    const totalEstrelas = 5;
+  
+    // Renderiza as estrelas com base na média atual
+    function renderEstrelas(mediaAtual) {
+      estrelasContainer.innerHTML = "";
+      for (let i = 1; i <= totalEstrelas; i++) {
+        const estrela = document.createElement("span");
+        estrela.className = "material-symbols-outlined";
+        if (i <= Math.floor(mediaAtual)) {
+      estrela.textContent = "star"; // cheia
+    } else if (i - 0.5 <= mediaAtual) {
+      estrela.textContent = "star_half"; // meia
+    } else {
+      estrela.textContent = "star_border"; // vazia
+    }
+        estrela.dataset.valor = i;
+        estrela.onclick = () => avaliar(i);
+        estrelasContainer.appendChild(estrela);
+      }
+    }
+  
+    // Adiciona uma nova avaliação e recalcula a média
+    function avaliar(valor) {
+      avaliacoes.push(valor); // Adiciona a nova avaliação ao array
+      const novaMedia = calcularMedia();
+      renderEstrelas(novaMedia); // Atualiza as estrelas
+      mediaSatisfacao.textContent = `${novaMedia.toFixed(1)}/5`; // Atualiza o texto da média
+    }
+  
+    // Calcula a média das avaliações
+    function calcularMedia() {
+      if (avaliacoes.length === 0) return 0; // Retorna 0 se não houver avaliações
+      const soma = avaliacoes.reduce((a, b) => a + b, 0); // Soma todas as avaliações
+      return soma / avaliacoes.length; // Divide pela quantidade de avaliações
+    }
+  
+    // Renderiza as estrelas inicialmente com a média atual
+    renderEstrelas(calcularMedia());
+
+    // Simula a existência de ocorrências salvas no localStorage
+// No futuro, será substituído por dados vindos do servidor
+
+function contarOcorrenciasPorTipo() {
+  const ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
+
+  const contadores = {
+    lixo: 0,
+    vandalismo: 0,
+    grafites: 0,
+    despejos: 0,
+    outros: 0
+  };
+
+    ocorrencias.forEach(o => {
+      switch (o.tipo) {
+        case 'Lixo Acumulado':
+          contadores.lixo++; break;
+        case 'Vandalismo':
+          contadores.vandalismo++; break;
+        case 'Grafite':
+          contadores.grafites++; break;
+        case 'Despejos Ilegais':
+          contadores.despejos++; break;
+        case 'Outros':
+          contadores.outros++; break;
+      }
+    });
+
+    return contadores;
+}
+
+  function atualizarContadores(dados) {
+    document.getElementById('cont-lixo').textContent = `${dados.lixo} `;
+    document.getElementById('cont-vandalismo').textContent = `${dados.vandalismo} `;
+    document.getElementById('cont-grafites').textContent = `${dados.grafites} `;
+    document.getElementById('cont-despejos').textContent = `${dados.despejos} `;
+    document.getElementById('cont-outros').textContent = `${dados.outros} `;
+  }
+
+  // Chamada inicial
+  const dados = contarOcorrenciasPorTipo();
+  atualizarContadores(dados);
+
+  function contarOcorrenciasResolvidas() {
+    const ocorrencias = JSON.parse(localStorage.getItem("auditorias")) || [];
+
+    // Considera resolvidas apenas as que têm 'estado: Concluída'
+    return ocorrencias.filter(a => a.estado === 'Concluída').length;
+  }
+
+  function atualizarContadorResolvidas() {
+    const total = contarOcorrenciasResolvidas();
+    const el = document.getElementById("cont-resolvidas");
+    if (el) el.textContent = total;
+  }
+
+  atualizarContadorResolvidas();
+
+  // Calcula o tempo médio de resposta 
+
+    function calcularTempoMedioAuditorias() {
+      const auditorias = JSON.parse(localStorage.getItem("auditorias")) || [];
+
+      // Filtra só auditorias com "duração" válida (número ou string numérica)
+      const comDuracao = auditorias
+        .filter(a => a.duracao !== undefined && !isNaN(Number(a.duracao)));
+
+      if (comDuracao.length === 0) return 0;
+
+      const totalHoras = comDuracao.reduce((soma, a) => soma + Number(a.duracao), 0);
+      const media = totalHoras / comDuracao.length;
+
+      return media;
+    }
+
+    function atualizarTempoMedioAuditorias() {
+      const media = calcularTempoMedioAuditorias();
+      const el = document.getElementById("tempo-medio-auditorias");
+
+      if (el) el.textContent = `${media.toFixed(1)}h`;
+    }
+
+    atualizarTempoMedioAuditorias();
+
+  </script>
+</body>
+</html>
+
+

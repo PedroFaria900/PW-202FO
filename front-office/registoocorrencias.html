@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Registo de Ocorrência - EyesEverywhere</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #dff0d8;
+    }
+
+    .logotipo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logotipo img {
+      height: 100px;
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .logotipo h1 {
+      font-size: 32px;
+      color: #4c9a2a;
+      margin: 0;
+    }
+
+    .container-ocorrencia {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px #6ca92b;
+    }
+
+    .container-ocorrencia h2 {
+      color: #4c9a2a;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #84c13b;
+    }
+
+    input[type="text"], input[type="file"], textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border: 1px solid #d4d4d4;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    textarea {
+      height: 100px;
+      resize: none;
+    }
+
+    .icon-wrapper {
+      position: relative;
+    }
+
+    .icon-wrapper .material-symbols-outlined {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #84c13b;
+      font-size: 24px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: #f4f4f4;
+      border: 1px solid #AACF45;
+      border-radius: 5px;
+      z-index: 10;
+    }
+
+    .dropdown-item {
+      padding: 10px;
+      font-size: 14px;
+      color: #3b8224;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #AACF45;
+      color: #f4f4f4;
+    }
+
+    .botao-submeter {
+      background-color: #6ca92b;
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 16px;
+      width: 180px;
+    }
+
+    .botao-submeter:hover {
+      background-color: #163f12;
+    }
+
+    #map-container {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 60%;
+      background: #f4f4f4;
+      border: 2px solid #AACF45;
+      border-radius: 10px;
+      z-index: 1000;
+    }
+
+    #map {
+      width: 100%;
+      height: 80%;
+      border-bottom: 1px solid #AACF45;
+    }
+
+    .map-header, .close-btn {
+      text-align: center;
+      font-weight: bold;
+      padding: 10px;
+      color: #4c9a2a;
+    }
+
+    .close-btn {
+      background-color: #6ca92b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px auto;
+      display: block;
+      padding: 8px 10px;
+     
+    }
+
+    .rodape {
+      background-color: #dff0d8;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .conteudo-rodape {
+      padding-top: 10px;
+    }
+
+    .ligações-rodape {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 14px;
+    }
+
+    .ligações-rodape a {
+      text-decoration: none;
+      color: #3d7020;
+      transition: color 0.3s;
+    }
+
+    .ligações-rodape a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logotipo">
+      <a href="paginainicial.html">
+        <img src="logo.png" alt="EyesEverywhere" />
+      </a>
+      <h1>EyesEverywhere</h1>
+    </div>
+  </header>
+
+  <div class="container-ocorrencia">
+    <h2>Registo de Ocorrência</h2>
+    <form onsubmit="submeterOcorrencia(event)">
+      <label for="data">Data</label>
+      <div class="icon-wrapper">
+        <input type="text" id="data" placeholder="Selecione uma data" readonly>
+        <span class="material-symbols-outlined" onclick="abrirCalendario()">calendar_month</span>
+      </div>
+    
+      <label for="hora">Hora</label>
+      <div class="icon-wrapper">
+        <input type="text" id="hora" placeholder="Selecione uma hora" readonly>
+        <span class="material-symbols-outlined" onclick="abrirRelogio()">schedule</span>
+      </div>
+      
+
+      <label for="tipo">Tipo de Ocorrência</label>
+      <div class="icon-wrapper">
+        <input type="text" id="tipo" placeholder="Escolha o tipo" readonly>
+        <span class="material-symbols-outlined" onclick="toggleDropdown()">expand_more</span>
+        <div class="dropdown" id="tipo-dropdown">
+               
+          <div class="dropdown-item" onclick="selectTipo('Lixo Acumulado')">Lixo Acumulado</div>
+          <div class="dropdown-item" onclick="selectTipo('Vandalismo')">Vandalismo</div>
+          <div class="dropdown-item" onclick="selectTipo('Grafite')">Grafite</div>
+          <div class="dropdown-item" onclick="selectTipo('Despejos Ilegais')">Despejos Ilegais</div>
+          <div class="dropdown-item" onclick="selectTipo('Outros')">Outros</div>
+        </div>
+      </div>
+
+      <label for="localizacao">Localização</label>
+      <div class="icon-wrapper">
+        <input type="text" id="localizacao" placeholder="Clique para selecionar" readonly>
+        <span class="material-symbols-outlined" onclick="abrirMapa()">pin_drop</span>
+      </div>
+      
+
+      <label for="anexos">Anexos</label>
+      <input type="file" id="anexos">
+
+           <div style="text-align: center; margin-top: 30px;">
+        <button type="submit" class="botao-submeter">Submeter</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="map-container">
+    <div class="map-header">Selecione a localização</div>
+    <div id="map"></div>
+    <button class="close-btn" type="button" onclick="fecharMapa()">Fechar</button>
+  </div>
+
+  <footer class="rodape">
+    <div class="conteudo-rodape">
+      <ul class="ligações-rodape">
+        <li><a href="paginainicial.html">Página Inicial</a></li>
+        <li><a href="sobrenos.html">Sobre nós</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Política de privacidade e Segurança</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+  <script>
+
+    window.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form');
+
+    // Cria os inputs hidden para latitude e longitude
+    const inputLat = document.createElement('input');
+    inputLat.type = 'hidden';
+    inputLat.id = 'latitude';
+    inputLat.name = 'latitude';
+
+    const inputLng = document.createElement('input');
+    inputLng.type = 'hidden';
+    inputLng.id = 'longitude';
+    inputLng.name = 'longitude';
+
+    // Adiciona os inputs ao formulário
+    form.appendChild(inputLat);
+    form.appendChild(inputLng);
+  });
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById('tipo-dropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function selectTipo(tipo) {
+      document.getElementById('tipo').value = tipo;
+      toggleDropdown();
+    }
+  
+  let calendario, relogio;
+
+  function abrirCalendario() {
+    if (!calendario) {
+      calendario = flatpickr("#data", {
+        dateFormat: "d/m/Y",
+        locale: "pt"
+      });
+    }
+    calendario.open();
+  }
+
+  function abrirRelogio() {
+    if (!relogio) {
+      relogio = flatpickr("#hora", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+      });
+    }
+    relogio.open();
+  }
+
+    let mapa, marcador;
+    function abrirMapa() {
+      document.getElementById('map-container').style.display = 'block';
+      if (!mapa) {
+        mapa = L.map('map').setView([41.444, -8.296], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(mapa);
+        mapa.on('click', async function (e) {
+          const { lat, lng } = e.latlng;
+          const resposta = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+          const dados = await resposta.json();
+          document.getElementById('localizacao').value = dados.display_name || `${lat}, ${lng}`;
+
+          // Atualiza os campos hidden criados via JS
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+
+          if (marcador) marcador.setLatLng(e.latlng);
+          else marcador = L.marker(e.latlng).addTo(mapa);
+        });
+      }
+    }
+
+    function fecharMapa() {
+      document.getElementById('map-container').style.display = 'none';
+    }
+
+    function submeterOcorrencia(evento) {
+    evento.preventDefault();
+
+    const data = document.getElementById('data').value;
+    const hora = document.getElementById('hora').value;
+    const tipo = document.getElementById('tipo').value;
+    const localizacao = document.getElementById('localizacao').value;
+    const latitude = document.getElementById('latitude').value;
+    const longitude = document.getElementById('longitude').value;
+
+
+    const anexosInput = document.getElementById('anexos');
+    let listaAnexos = [];
+
+    for (let i = 0; i < anexosInput.files.length; i++) {
+      listaAnexos.push(anexosInput.files[i].name);
+    }
+
+    const ocorrencia = {
+      data,
+      hora,
+      tipo,
+      localizacao,
+      latitude,
+      longitude,
+      anexos: listaAnexos
+    };
+
+    // Verifica se já existem ocorrências guardadas
+    let ocorrenciasGuardadas = localStorage.getItem('ocorrencias');
+    ocorrenciasGuardadas = ocorrenciasGuardadas ? JSON.parse(ocorrenciasGuardadas) : [];
+
+    // Adiciona nova ocorrência
+    ocorrenciasGuardadas.push(ocorrencia);
+
+    // Guarda novamente no localStorage
+    localStorage.setItem('ocorrencias', JSON.stringify(ocorrenciasGuardadas));
+
+    alert("Ocorrência submetida com sucesso!");
+
+    console.log("Ocorrência guardada:", ocorrencia); // Apenas para debug
+
+    evento.target.reset();
+    document.getElementById('tipo').value = '';
+    document.getElementById('localizacao').value = '';
+    document.getElementById('latitude').value = '';
+    document.getElementById('longitude').value = '';
+  }
+</script>
+</body>
+</html>

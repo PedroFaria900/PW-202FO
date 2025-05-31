@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Tipologias de Auditorias e Ocorrências</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      color: #21560f;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #dff0d8;
+    }
+
+    .logotipo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logotipo img {
+      height: 100px;
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .logotipo h1 {
+      font-size: 32px;
+      color: #4c9a2a;
+      margin: 0;
+    }
+
+    .container-tipologias {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px #6ca92b;
+      flex-grow: 1;
+    }
+
+    .container-tipologias h2 {
+      color: #4c9a2a;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px 10px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      color: #3b8224;
+      font-weight: 600;
+    }
+
+    td {
+      color: #21560f;
+      border-top: 1px solid #AACF45;
+    }
+
+    .estado {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid;
+    }
+
+    .pendente {
+      background-color: #f0fce8;
+      color: #b4d67d;
+      border-color: #b4d67d;
+    }
+
+    .em-analise {
+      background-color: #eafbe0;
+      color: #87c76b;
+      border-color: #87c76b;
+    }
+
+    .aprovada {
+      background-color: #e6f9ed;
+      color: #28a745;
+      border-color: #28a745;
+    }
+
+    .acoes {
+      text-align: right;
+    }
+
+    .material-symbols-outlined.acoes-icon {
+      font-size: 20px;
+      color: #3b8224;
+      cursor: pointer;
+    }
+
+    footer.rodape {
+      background-color: #dff0d8;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    .conteudo-rodape {
+      padding-top: 10px;
+    }
+
+    .ligações-rodape {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 14px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .ligações-rodape a {
+      text-decoration: none;
+      color: #3d7020;
+      transition: color 0.3s;
+    }
+
+    .ligações-rodape a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logotipo">
+    <a href="paginainicial.html">
+      <img src="logo.png" alt="EyesEverywhere" />
+    </a>
+    <h1>EyesEverywhere</h1>
+  </div>
+</header>
+
+<div class="container-tipologias">
+  <h2>Tipologias de auditorias e ocorrências</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Data</th>
+        <th>Hora</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th class="acoes">Ações</th>
+      </tr>
+    </thead>
+    <tbody id="tipologias-tabela">
+      <!-- Dados preenchidos dinamicamente via JavaScript -->
+    </tbody>
+  </table>
+</div>
+
+<footer class="rodape">
+  <div class="conteudo-rodape">
+    <ul class="ligações-rodape">
+      <li><a href="paginainicial.html">Página Inicial</a></li>
+      <li><a href="sobrenos.html">Sobre nós</a></li>
+      <li><a href="#">Contacto</a></li>
+      <li><a href="#">Política de privacidade e Segurança</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const ocorrencias = JSON.parse(localStorage.getItem('ocorrencias')) || [];
+    const tabela = document.getElementById('tipologias-tabela');
+
+    ocorrencias.forEach((ocorrencia, index) => {
+      const estado = ocorrencia.estado?.toLowerCase() || 'pendente';
+      let estadoClasse = 'pendente';
+
+      if (estado.includes('análise') || estado.includes('analise')) estadoClasse = 'em-analise';
+      else if (estado.includes('aprovada')) estadoClasse = 'aprovada';
+
+      const linha = document.createElement('tr');
+      linha.innerHTML = `
+        <td>#${12548796 + index}</td>
+        <td>${ocorrencia.data}</td>
+        <td>${ocorrencia.hora}</td>
+        <td>${ocorrencia.tipo}</td>
+        <td><span class="estado ${estadoClasse}">${ocorrencia.estado || 'Pendente'}</span></td>
+        <td class="acoes">
+          <span class="material-symbols-outlined acoes-icon">more_vert</span>
+        </td>
+      `;
+      tabela.appendChild(linha);
+    });
+  });
+</script>
+</body>
+</html>
